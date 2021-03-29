@@ -12,6 +12,7 @@ Plug 'preservim/nerdcommenter'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'w0rp/ale'
 Plug 'sheerun/vim-polyglot'
+Plug 'elixir-editors/vim-elixir'
 call plug#end()
 
 " Colors
@@ -24,6 +25,12 @@ let g:lightline = {
 " Editor
 let mapleader=" "
 set noshowmode
+set number relativenumber
+set cursorline
+set hlsearch
+set incsearch
+set confirm
+syntax enable
 nnoremap <leader>ot :below 10sp term://zsh<cr>i
 nnoremap <leader><leader> :FZF<CR>
 let g:fzf_action = {
