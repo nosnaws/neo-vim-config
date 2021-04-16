@@ -1,6 +1,5 @@
 " Plugins
 call plug#begin("~/.config/nvim/plugged")
-Plug 'arcticicestudio/nord-vim'
 Plug 'preservim/nerdtree'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -13,24 +12,49 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'w0rp/ale'
 Plug 'sheerun/vim-polyglot'
 Plug 'elixir-editors/vim-elixir'
+Plug 'peitalin/vim-jsx-typescript'
+Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
+Plug 'jparise/vim-graphql'
+Plug 'pangloss/vim-javascript'
+Plug 'mtth/scratch.vim'
+
+" Themes
+Plug 'drewtempelmeyer/palenight.vim'
 call plug#end()
 
 " Colors
-colorscheme nord
+" set background=dark
+colorscheme palenight " Set the colorscheme
 
+if has('termguicolors')
+  set termguicolors " Enables 24-bit colors
+endif
+
+let g:palenight_termcolors=16 " Palenight theme setting
+
+" Status bar color setting
 let g:lightline = {
-  \ 'colorscheme': 'nord',
+  \ 'colorscheme': 'palenight',
   \}
 
 " Editor
-let mapleader=" "
-set noshowmode
-set number relativenumber
-set cursorline
-set hlsearch
-set incsearch
-set confirm
-syntax enable
+let mapleader=" " " Set the leader key to space
+syntax enable " Enable syntax highlight
+set noshowmode " Shows the current mode
+set number relativenumber " Sets line numbers and makes them relative
+set cursorline " Highlights the current line
+set wildmenu " visual autocomplete for command menu
+set lazyredraw " redraw only when needed
+set showmatch " highlight matching [{()}]
+filetype indent on " load filetype-specific indent files
+set hlsearch " highlight search matches
+set incsearch " search while typing
+set confirm " Always confirms before actions like closing a file
+set foldenable " Enables code folding
+set foldlevelstart=10 " open most folds by default
+set foldnestmax=10 " 10 nested fold max
+set foldmethod=indent " fold based on indent level
+
 nnoremap <leader>ot :below 10sp term://zsh<cr>i
 nnoremap <leader><leader> :FZF<CR>
 let g:fzf_action = {
@@ -38,11 +62,13 @@ let g:fzf_action = {
   \ 'ctrl-s': 'split',
   \ 'ctrl-v': 'vsplit'
   \}
-let $FZF_DEFAULT_COMMAND='rg --files'
+let $FZF_DEFAULT_COMMAND='rg --files --hidden'
 
 " Terminal
-
-:tnoremap <Esc> <C-\><C-n>
+if has("nvim")
+  au TermOpen * tnoremap <buffer> <Esc> <c-\><c-n>
+  au FileType fzf tunmap <buffer> <Esc>
+endif
 " NERDTree
 
 let g:NERDTreeShowHidden = 1 
